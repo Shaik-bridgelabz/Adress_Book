@@ -3,7 +3,7 @@ package com.bridgelabz.addressbook;
 public class AddressBookException extends Exception {
 
     public enum ExceptionType {
-        NO_FILE_FOUND,CANNOT_CREATE_FILE;
+        NO_FILE_FOUND,CANNOT_CREATE_FILE, ENTERED_NULL,ENTERED_EMPTY;
     }
     ExceptionType type;
 

@@ -3,8 +3,6 @@ package com.bridgelabz.addressbook;
 import org.junit.Assert;
 import org.junit.Test;
 
-import java.io.IOException;
-
 public class TestAddressBook {
 
     @Test
@@ -38,6 +36,7 @@ public class TestAddressBook {
         try {
         AddressBookManager addressBookManager = new AddressBookManager();
         addressBookManager.addPersonDetails("Shaik", "Mohammed", "VijayNagar", "Bangalore", "Karnataka", "124536", "8660424568");
+        addressBookManager.addPersonDetails("Salman","Khan","Bandra","Mumbai","Maharashtra","666999","8855225588");
             Assert.assertEquals(true, addressBookManager.save("MyAddress.json"));
         } catch (AddressBookException e) {
             e.printStackTrace();
@@ -61,6 +60,36 @@ public class TestAddressBook {
             addressBookManager.readPersonInfo("WrongAddress.json");
         } catch (AddressBookException e) {
             Assert.assertEquals(AddressBookException.ExceptionType.NO_FILE_FOUND,e.type);
+        }
+    }
+
+    @Test
+    public void givenEmptyFileName_whenReadPersonDetails_shouldReturnCustomException(){
+        try {
+            AddressBookManager addressBookManager = new AddressBookManager();
+            addressBookManager.readPersonInfo("");
+        } catch (AddressBookException e) {
+            Assert.assertEquals(AddressBookException.ExceptionType.ENTERED_EMPTY,e.type);
+        }
+    }
+
+    @Test
+    public void givenNullFileName_whenReadPersonDetails_shouldReturnCustomException(){
+        try {
+            AddressBookManager addressBookManager = new AddressBookManager();
+            addressBookManager.readPersonInfo(null);
+        } catch (AddressBookException e) {
+            Assert.assertEquals(AddressBookException.ExceptionType.ENTERED_NULL,e.type);
+        }
+    }
+
+    @Test
+    public void givenFileName_whenDeletedPersonDetails_shouldDeletePersonandReturnTrue() {
+        AddressBookManager addressBookManager = new AddressBookManager();
+        try {
+            Assert.assertEquals(true,addressBookManager.deletePersonDetails("MyAddress.json","Salman"));
+        } catch (AddressBookException e) {
+            e.printStackTrace();
         }
     }
 }
