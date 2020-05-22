@@ -66,6 +66,19 @@ public class PersonDetails {
         PhoneNumber = phoneNumber;
     }
 
+    public PersonDetails() {
+    }
+
+    public PersonDetails(String firstName, String lastName, String address, String city, String state, String zip, String phoneNumber) {
+        FirstName = firstName;
+        LastName = lastName;
+        Address = address;
+        City = city;
+        State = state;
+        Zip = zip;
+        PhoneNumber = phoneNumber;
+    }
+
     @Override
     public String toString() {
         return "PersonDetails{" +
