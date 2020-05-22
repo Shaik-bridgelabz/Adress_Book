@@ -1,6 +1,9 @@
 package com.bridgelabz.addressbook;
 
+import com.google.gson.Gson;
+
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -34,4 +37,18 @@ public class AddressBookManager {
         personInfo.add(personDetails);
         return personDetails;
     }
+
+    public boolean save(String fileName) throws IOException {
+        File file = new File("./src/main/java/com/bridgelabz/addressbook/json/" + fileName);
+        if (file.exists()) {
+            Gson gson = new Gson();
+            String json = gson.toJson(personInfo);
+            FileWriter writer = new FileWriter("./src/main/java/com/bridgelabz/addressbook/json/" + fileName);
+            writer.write(json);
+            writer.close();
+            return true;
+        }
+        return false;
+    }
+
 }
