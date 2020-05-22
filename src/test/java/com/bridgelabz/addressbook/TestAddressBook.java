@@ -53,4 +53,14 @@ public class TestAddressBook {
             e.printStackTrace();
         }
     }
+
+    @Test
+    public void givenWrongFileName_whenReadPersonDetails_shouldReturnCustomException(){
+        try {
+            AddressBookManager addressBookManager = new AddressBookManager();
+            addressBookManager.readPersonInfo("WrongAddress.json");
+        } catch (AddressBookException e) {
+            Assert.assertEquals(AddressBookException.ExceptionType.NO_FILE_FOUND,e.type);
+        }
+    }
 }
