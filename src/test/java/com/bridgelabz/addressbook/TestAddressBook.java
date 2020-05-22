@@ -9,14 +9,22 @@ public class TestAddressBook {
 
     @Test
     public void givenFileNametoCreate_whenNotExist_shouldCreateFileandReturnTrue() {
+        try {
         AddressBookManager addressBookManager = new AddressBookManager();
-        Assert.assertEquals(true, addressBookManager.createFile("MyAddress.json"));
+            Assert.assertEquals(true, addressBookManager.createFile("MyAddress.json"));
+        } catch (AddressBookException e) {
+            e.printStackTrace();
+        }
     }
 
     @Test
     public void givenFileNametoCreate_whenExists_shouldNotCreateFileandReturnFalse() {
+        try {
         AddressBookManager addressBookManager = new AddressBookManager();
-        Assert.assertEquals(false, addressBookManager.createFile("MyAddress.json"));
+            Assert.assertEquals(false, addressBookManager.createFile("MyAddress.json"));
+        } catch (AddressBookException e) {
+            e.printStackTrace();
+        }
     }
 
     @Test
@@ -26,12 +34,22 @@ public class TestAddressBook {
     }
 
     @Test
-    public void givenFileName_whenSavePersonDetails_ItShouldWriteIntoJson() {
+    public void givenFileName_whenSavePersonDetails_shouldWriteIntoJson() {
+        try {
         AddressBookManager addressBookManager = new AddressBookManager();
         addressBookManager.addPersonDetails("Shaik", "Mohammed", "VijayNagar", "Bangalore", "Karnataka", "124536", "8660424568");
-        try {
             Assert.assertEquals(true, addressBookManager.save("MyAddress.json"));
-        } catch (IOException e) {
+        } catch (AddressBookException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    public void givenFileName_whenReadPersonDetails_shouldReadPersonDetailsFromJson(){
+        try {
+        AddressBookManager addressBookManager = new AddressBookManager();
+            Assert.assertEquals(true,addressBookManager.readPersonInfo("MyAddress.json"));
+        } catch (AddressBookException e) {
             e.printStackTrace();
         }
     }
