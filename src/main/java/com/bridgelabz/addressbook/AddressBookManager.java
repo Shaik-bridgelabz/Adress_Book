@@ -39,8 +39,7 @@ public class AddressBookManager implements AddressBook  {
     }
 
     @Override
-    public boolean save(String fileName, ArrayList<PersonDetails> personDetails) throws AddressBookException
-     {
+    public boolean save(String fileName, ArrayList<PersonDetails> personDetails) throws AddressBookException {
         try {
             if (fileName.length() == 0)
                 throw new AddressBookException("File Name Cannot be empty", AddressBookException.ExceptionType.ENTERED_EMPTY);
@@ -63,7 +62,7 @@ public class AddressBookManager implements AddressBook  {
     }
 
     @Override
-    public List<PersonDetails> readPersonInfo(String fileName) throws AddressBookException {
+    public ArrayList<PersonDetails> readPersonInfo(String fileName) throws AddressBookException {
         try {
         if (fileName.length()==0)
             throw new AddressBookException("File Name Cannot be empty", AddressBookException.ExceptionType.ENTERED_EMPTY);
@@ -186,6 +185,31 @@ public class AddressBookManager implements AddressBook  {
             throw new AddressBookException("File Name Cannot be Null", AddressBookException.ExceptionType.ENTERED_NULL);
         } catch (FileNotFoundException e) {
             throw new AddressBookException("No Such File Found in Path", AddressBookException.ExceptionType.NO_FILE_FOUND);
+        }
+    }
+
+    @Override
+    public boolean saveAs(String fileName, ArrayList<PersonDetails> personDetails) throws AddressBookException {
+        try {
+            if (fileName.length() == 0)
+                throw new AddressBookException("File Name Cannot be empty", AddressBookException.ExceptionType.ENTERED_EMPTY);
+            File file = new File("./src/main/java/com/bridgelabz/addressbook/json/" + fileName);
+            if (file.exists()) {
+                System.out.println("Please give other file Name");
+                return false;
+            }
+            this.createFile(fileName);
+            Gson gson = new Gson();
+            String json = gson.toJson(personDetails);
+            FileWriter writer = null;
+            writer = new FileWriter("./src/main/java/com/bridgelabz/addressbook/json/" + fileName);
+            writer.write(json);
+            writer.close();
+            return true;
+        } catch (IOException e) {
+            throw new AddressBookException("Cannot Save in the File", AddressBookException.ExceptionType.NO_FILE_FOUND);
+        } catch (NullPointerException e) {
+            throw new AddressBookException("File Name Cannot be Null", AddressBookException.ExceptionType.ENTERED_NULL);
         }
     }
 }

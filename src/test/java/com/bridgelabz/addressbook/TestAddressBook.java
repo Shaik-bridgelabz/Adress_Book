@@ -160,4 +160,15 @@ public class TestAddressBook {
             e.printStackTrace();
         }
     }
+
+    @Test
+    public void givenNewFileName_whenSavedAs_shouldSavePersonDetails() {
+        try {
+            AddressBookManager addressBookManager=new AddressBookManager();
+            ArrayList<PersonDetails> personDetails = addressBookManager.readPersonInfo("MyAddress.json");
+            Assert.assertEquals(true,addressBookManager.saveAs("NewAddressBook.json",personDetails));
+        } catch (AddressBookException e) {
+            e.printStackTrace();
+        }
+    }
 }

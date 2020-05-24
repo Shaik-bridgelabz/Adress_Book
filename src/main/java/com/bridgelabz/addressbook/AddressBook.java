@@ -11,7 +11,7 @@ public interface AddressBook {
 
     public boolean save(String fileName, ArrayList<PersonDetails> personDetails) throws AddressBookException;
 
-    public List<PersonDetails> readPersonInfo(String fileName) throws AddressBookException;
+    public ArrayList<PersonDetails> readPersonInfo(String fileName) throws AddressBookException;
 
     public boolean deletePersonDetails(String fileName, String firstName) throws AddressBookException;
 
@@ -21,4 +21,5 @@ public interface AddressBook {
 
     public void printPersonDetails(String fileName) throws AddressBookException;
 
+    public boolean saveAs(String fileName, ArrayList<PersonDetails> personDetails) throws AddressBookException;
 }
