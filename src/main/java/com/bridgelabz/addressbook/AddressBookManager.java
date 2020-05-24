@@ -7,10 +7,11 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class AddressBookManager {
+public class AddressBookManager implements AddressBook  {
 
     ArrayList<PersonDetails> personInfo = new ArrayList<PersonDetails>();
 
+    @Override
     public boolean createFile(String fileName) throws AddressBookException {
         try {
         if (fileName.length()==0)
@@ -29,6 +30,7 @@ public class AddressBookManager {
         }
     }
 
+    @Override
     public PersonDetails addPersonDetails(String firstName, String lastName, String address, String city, String state, String zip, String phoneNumber) {
         PersonDetails personDetails = new PersonDetails();
         personDetails.setFirstName(firstName);
@@ -42,6 +44,7 @@ public class AddressBookManager {
         return personDetails;
     }
 
+    @Override
     public boolean save(String fileName) throws AddressBookException {
         try {
             if (fileName.length() == 0)
@@ -64,6 +67,7 @@ public class AddressBookManager {
         }
     }
 
+    @Override
     public List<PersonDetails> readPersonInfo(String fileName) throws AddressBookException {
         try {
         if (fileName.length()==0)
@@ -87,6 +91,7 @@ public class AddressBookManager {
         }
     }
 
+    @Override
     public boolean deletePersonDetails(String fileName, String firstName) throws AddressBookException {
         try {
             if (fileName.length()==0)
