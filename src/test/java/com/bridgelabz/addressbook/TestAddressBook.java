@@ -3,6 +3,8 @@ package com.bridgelabz.addressbook;
 import org.junit.Assert;
 import org.junit.Test;
 
+import java.util.List;
+
 public class TestAddressBook {
 
     @Test
@@ -28,16 +30,16 @@ public class TestAddressBook {
     @Test
     public void givenFile_whenAddPersonDetails_shouldReturnPersonDetails() {
         AddressBookManager addressBookManager = new AddressBookManager();
-        Assert.assertEquals("8660424568", addressBookManager.addPersonDetails("Shaik", "Mohammed", "VijayNagar", "Bangalore", "Karnataka", "124536", "8660424568").getPhoneNumber());
+        PersonDetails personDetails=new PersonDetails("Shaik", "Mohammed", "VijayNagar", "Bangalore", "Karnataka", "124536", "8660424568");
+        Assert.assertEquals("8660424568", addressBookManager.addPersonDetails(personDetails).iterator().next().getPhoneNumber());
     }
 
     @Test
     public void givenFileName_whenSavePersonDetails_shouldWriteIntoJson() {
         try {
         AddressBookManager addressBookManager = new AddressBookManager();
-        addressBookManager.addPersonDetails("Shaik", "Mohammed", "VijayNagar", "Bangalore", "Karnataka", "124536", "8660424568");
-        addressBookManager.addPersonDetails("Salman","Khan","Bandra","Mumbai","Maharashtra","666999","8855225588");
-            Assert.assertEquals(true, addressBookManager.save("MyAddress.json"));
+            PersonDetails personDetails = new PersonDetails("Shaik", "Mohammed", "VijayNagar", "Bangalore", "Karnataka", "124536", "8660424568");
+            Assert.assertEquals(true, addressBookManager.save("MyAddress.json",addressBookManager.addPersonDetails(personDetails)));
         } catch (AddressBookException e) {
             e.printStackTrace();
         }
@@ -47,7 +49,8 @@ public class TestAddressBook {
     public void givenFileName_whenReadPersonDetails_shouldReadPersonDetailsFromJson(){
         try {
         AddressBookManager addressBookManager = new AddressBookManager();
-            Assert.assertEquals(true,addressBookManager.readPersonInfo("MyAddress.json"));
+        List<PersonDetails> list =addressBookManager.readPersonInfo("MyAddress.json");
+            Assert.assertEquals(true,addressBookManager.checksize(list));
         } catch (AddressBookException e) {
             e.printStackTrace();
         }
@@ -85,9 +88,20 @@ public class TestAddressBook {
 
     @Test
     public void givenFileName_whenDeletedPersonDetails_shouldDeletePersonandReturnTrue() {
-        AddressBookManager addressBookManager = new AddressBookManager();
         try {
+        AddressBookManager addressBookManager = new AddressBookManager();
             Assert.assertEquals(true,addressBookManager.deletePersonDetails("MyAddress.json","Salman"));
+        } catch (AddressBookException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    public void WhenEditPersonDetails_ShouldReturnUpdatedDetails() {
+        try {
+        AddressBookManager addressBookManager = new AddressBookManager();
+        PersonDetails personDetails = new PersonDetails("Sharukh", "Khan", "Mumbai", "Mumbai", "Maharashtra", "124536", "8660424568");
+            Assert.assertEquals(true, addressBookManager.editPersonDetails("8660424568", "MyAddress.json", personDetails));
         } catch (AddressBookException e) {
             e.printStackTrace();
         }

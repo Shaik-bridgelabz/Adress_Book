@@ -1,16 +1,21 @@
 package com.bridgelabz.addressbook;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public interface AddressBook {
 
     public boolean createFile(String fileName) throws AddressBookException;
 
-    public PersonDetails addPersonDetails(String firstName, String lastName, String address, String city, String state, String zip, String phoneNumber);
+    public ArrayList<PersonDetails> addPersonDetails(PersonDetails personDetails);
 
-    public boolean save(String fileName) throws AddressBookException;
+    public boolean save(String fileName, ArrayList<PersonDetails> personDetails) throws AddressBookException;
 
     public List<PersonDetails> readPersonInfo(String fileName) throws AddressBookException;
 
     public boolean deletePersonDetails(String fileName, String firstName) throws AddressBookException;
+
+    public boolean editPersonDetails(String phoneNumber, String fileName, PersonDetails personDetails) throws AddressBookException;
+
+    public boolean checksize(List<PersonDetails> list);
 }

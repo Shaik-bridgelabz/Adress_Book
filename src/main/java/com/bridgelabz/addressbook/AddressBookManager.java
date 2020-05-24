@@ -31,28 +31,21 @@ public class AddressBookManager implements AddressBook  {
     }
 
     @Override
-    public PersonDetails addPersonDetails(String firstName, String lastName, String address, String city, String state, String zip, String phoneNumber) {
-        PersonDetails personDetails = new PersonDetails();
-        personDetails.setFirstName(firstName);
-        personDetails.setLastName(lastName);
-        personDetails.setAddress(address);
-        personDetails.setCity(city);
-        personDetails.setState(state);
-        personDetails.setZip(zip);
-        personDetails.setPhoneNumber(phoneNumber);
-        personInfo.add(personDetails);
-        return personDetails;
+    public ArrayList<PersonDetails> addPersonDetails(PersonDetails personDetails) {
+       personInfo.add(personDetails);
+       return personInfo;
     }
 
     @Override
-    public boolean save(String fileName) throws AddressBookException {
+    public boolean save(String fileName, ArrayList<PersonDetails> personDetails) throws AddressBookException
+     {
         try {
             if (fileName.length() == 0)
                 throw new AddressBookException("File Name Cannot be empty", AddressBookException.ExceptionType.ENTERED_EMPTY);
             File file = new File("./src/main/java/com/bridgelabz/addressbook/json/" + fileName);
             if (file.exists()) {
                 Gson gson = new Gson();
-                String json = gson.toJson(personInfo);
+                String json = gson.toJson(personDetails);
                 FileWriter writer = null;
                 writer = new FileWriter("./src/main/java/com/bridgelabz/addressbook/json/" + fileName);
                 writer.write(json);
@@ -117,6 +110,45 @@ public class AddressBookManager implements AddressBook  {
         } catch (IOException e) {
             throw new AddressBookException("File I/O Error", AddressBookException.ExceptionType.NO_FILE_FOUND);
         }
+    }
+
+    @Override
+    public boolean editPersonDetails(String phoneNumber, String fileName, PersonDetails personDetails) throws AddressBookException {
+        List<PersonDetails> personList = readPersonInfo(fileName);
+        File file = new File("./src/main/java/com/bridgelabz/addressbook/json/" + fileName);
+        try {
+                for (PersonDetails person : personList) {
+                    if (person.getPhoneNumber().equals(phoneNumber)) {
+                        person.setFirstName(personDetails.getFirstName());
+                        person.setLastName(personDetails.getLastName());
+                        person.setAddress(personDetails.getAddress());
+                        person.setCity(personDetails.getCity());
+                        person.setState(personDetails.getState());
+                        person.setZip(personDetails.getZip());
+                        person.setPhoneNumber(personDetails.getPhoneNumber());
+                        Gson gson = new Gson();
+                        String json = gson.toJson(personList);
+                        FileWriter writer = null;
+                        writer = new FileWriter(file);
+                        writer.write(json);
+                        writer.close();
+                    return true;
+                    }
+                }
+                return false;
+        } catch (NullPointerException e) {
+            throw new AddressBookException("File Name Cannot be Null", AddressBookException.ExceptionType.ENTERED_NULL);
+        } catch (FileNotFoundException e) {
+            throw new AddressBookException("No Such File Found in Path", AddressBookException.ExceptionType.NO_FILE_FOUND);
+        } catch (IOException e) {
+            throw new AddressBookException("File I/O Error", AddressBookException.ExceptionType.NO_FILE_FOUND);
+        }
+    }
+
+    public boolean checksize(List<PersonDetails> list) {
+        if(list.size()!=0)
+            return true;
+        return false;
     }
 
 }
