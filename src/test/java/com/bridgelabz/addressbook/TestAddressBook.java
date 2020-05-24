@@ -150,4 +150,14 @@ public class TestAddressBook {
             e.printStackTrace();
         }
     }
+
+    @Test
+    public void givenFileName_whenPrintedPersonDetails_shouldPrintJsonFile() {
+        try {
+            AddressBookManager addressBookManager=new AddressBookManager();
+            addressBookManager.printPersonDetails("MyAddress.json");
+        } catch (AddressBookException e) {
+            e.printStackTrace();
+        }
+    }
 }

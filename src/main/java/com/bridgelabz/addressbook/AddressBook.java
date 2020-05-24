@@ -19,4 +19,6 @@ public interface AddressBook {
 
     public ArrayList getFieldWiseSortedData(SortByField.Parameter parameter,String fileName) throws AddressBookException;
 
+    public void printPersonDetails(String fileName) throws AddressBookException;
+
 }
