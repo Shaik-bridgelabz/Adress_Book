@@ -128,4 +128,26 @@ public class TestAddressBook {
             e.printStackTrace();
         }
     }
+
+    @Test
+    public void givenFileName_whenSortPersonDetailsByZip_shouldReturnSortedNameAtFirst() {
+        try {
+            AddressBookManager addressBookManager = new AddressBookManager();
+            ArrayList<PersonDetails> sortedData=addressBookManager.getFieldWiseSortedData(SortByField.Parameter.ZIP,"MyAddress.json");
+            Assert.assertEquals("Micheal",sortedData.get(0).FirstName);
+        } catch (AddressBookException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    public void givenFileName_whenSortPersonDetailsByZip_shouldReturnSortedNameAtLast() {
+        try {
+            AddressBookManager addressBookManager = new AddressBookManager();
+            ArrayList<PersonDetails> sortedData=addressBookManager.getFieldWiseSortedData(SortByField.Parameter.ZIP,"MyAddress.json");
+            Assert.assertEquals("Katrina",sortedData.get(sortedData.size()-1).FirstName);
+        } catch (AddressBookException e) {
+            e.printStackTrace();
+        }
+    }
 }
