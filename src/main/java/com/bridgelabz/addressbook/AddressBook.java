@@ -17,5 +17,6 @@ public interface AddressBook {
 
     public boolean editPersonDetails(String phoneNumber, String fileName, PersonDetails personDetails) throws AddressBookException;
 
-    public boolean checksize(List<PersonDetails> list);
+    public ArrayList getFieldWiseSortedData(SortByField.Parameter parameter,String fileName) throws AddressBookException;
+
 }

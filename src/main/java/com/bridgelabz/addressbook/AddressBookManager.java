@@ -5,7 +5,9 @@ import com.google.gson.Gson;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class AddressBookManager implements AddressBook  {
 
@@ -149,6 +151,20 @@ public class AddressBookManager implements AddressBook  {
         if(list.size()!=0)
             return true;
         return false;
+    }
+
+    @Override
+    public ArrayList getFieldWiseSortedData(SortByField.Parameter parameter,String fileName) throws AddressBookException {
+        List<PersonDetails> personList = readPersonInfo(fileName);
+        Comparator<PersonDetails> personDetailsComparator;
+        if(personList ==null || personList.size()==0){
+            throw new AddressBookException("No Data Found",AddressBookException.ExceptionType.NO_FILE_FOUND);
+        }
+        personDetailsComparator = SortByField.getParameter(parameter);
+        ArrayList sortedData= personList.stream().
+                sorted(personDetailsComparator).collect(Collectors.toCollection(ArrayList::new));
+        this.save(fileName,sortedData);
+        return sortedData;
     }
 
 }

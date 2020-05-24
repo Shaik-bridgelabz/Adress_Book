@@ -2,7 +2,7 @@ package com.bridgelabz.addressbook;
 
 import org.junit.Assert;
 import org.junit.Test;
-
+import java.util.ArrayList;
 import java.util.List;
 
 public class TestAddressBook {
@@ -97,11 +97,33 @@ public class TestAddressBook {
     }
 
     @Test
-    public void WhenEditPersonDetails_ShouldReturnUpdatedDetails() {
+    public void givenFileName_whenEditPersonDetails_shouldReturnUpdatedDetails() {
         try {
         AddressBookManager addressBookManager = new AddressBookManager();
         PersonDetails personDetails = new PersonDetails("Sharukh", "Khan", "Mumbai", "Mumbai", "Maharashtra", "124536", "8660424568");
             Assert.assertEquals(true, addressBookManager.editPersonDetails("8660424568", "MyAddress.json", personDetails));
+        } catch (AddressBookException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    public void givenFileName_whenSortPersonDetailsByName_shouldReturnSortedNameAtFirst() {
+        try {
+            AddressBookManager addressBookManager = new AddressBookManager();
+            ArrayList<PersonDetails> sortedData=addressBookManager.getFieldWiseSortedData(SortByField.Parameter.FIRST_NAME,"MyAddress.json");
+            Assert.assertEquals("Ashish",sortedData.get(0).FirstName);
+        } catch (AddressBookException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    public void givenFileName_whenSortPersonDetailsByName_shouldReturnSortedNameAtLast() {
+        try {
+            AddressBookManager addressBookManager = new AddressBookManager();
+            ArrayList<PersonDetails> sortedData=addressBookManager.getFieldWiseSortedData(SortByField.Parameter.FIRST_NAME,"MyAddress.json");
+            Assert.assertEquals("Shaik",sortedData.get(sortedData.size()-1).FirstName);
         } catch (AddressBookException e) {
             e.printStackTrace();
         }

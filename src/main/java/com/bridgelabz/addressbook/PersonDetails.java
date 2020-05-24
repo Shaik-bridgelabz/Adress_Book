@@ -2,14 +2,18 @@ package com.bridgelabz.addressbook;
 
 public class PersonDetails {
 
-    private String FirstName;
+    public String FirstName;
     private String LastName;
     private String Address;
     private String City;
     private String State;
-    private String Zip;
+    public String Zip;
     private String PhoneNumber ;
 
+    public PersonDetails(PersonDetails personDetails) {
+        this.FirstName=personDetails.FirstName;
+        this.Zip=personDetails.Zip;
+    }
     public String getFirstName() {
         return FirstName;
     }
