@@ -112,7 +112,7 @@ public class TestAddressBook {
         try {
             AddressBookManager addressBookManager = new AddressBookManager();
             ArrayList<PersonDetails> sortedData=addressBookManager.getFieldWiseSortedData(SortByField.Parameter.FIRST_NAME,"MyAddress.json");
-            Assert.assertEquals("Ashish",sortedData.get(0).FirstName);
+            Assert.assertEquals("Ashish",sortedData.get(0).getFirstName());
         } catch (AddressBookException e) {
             e.printStackTrace();
         }
@@ -123,7 +123,7 @@ public class TestAddressBook {
         try {
             AddressBookManager addressBookManager = new AddressBookManager();
             ArrayList<PersonDetails> sortedData=addressBookManager.getFieldWiseSortedData(SortByField.Parameter.FIRST_NAME,"MyAddress.json");
-            Assert.assertEquals("Shaik",sortedData.get(sortedData.size()-1).FirstName);
+            Assert.assertEquals("Shaik",sortedData.get(sortedData.size()-1).getFirstName());
         } catch (AddressBookException e) {
             e.printStackTrace();
         }
@@ -134,7 +134,7 @@ public class TestAddressBook {
         try {
             AddressBookManager addressBookManager = new AddressBookManager();
             ArrayList<PersonDetails> sortedData=addressBookManager.getFieldWiseSortedData(SortByField.Parameter.ZIP,"MyAddress.json");
-            Assert.assertEquals("Micheal",sortedData.get(0).FirstName);
+            Assert.assertEquals("Micheal",sortedData.get(0).getFirstName());
         } catch (AddressBookException e) {
             e.printStackTrace();
         }
@@ -145,7 +145,7 @@ public class TestAddressBook {
         try {
             AddressBookManager addressBookManager = new AddressBookManager();
             ArrayList<PersonDetails> sortedData=addressBookManager.getFieldWiseSortedData(SortByField.Parameter.ZIP,"MyAddress.json");
-            Assert.assertEquals("Katrina",sortedData.get(sortedData.size()-1).FirstName);
+            Assert.assertEquals("Katrina",sortedData.get(sortedData.size()-1).getFirstName());
         } catch (AddressBookException e) {
             e.printStackTrace();
         }

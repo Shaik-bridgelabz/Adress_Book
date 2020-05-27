@@ -13,7 +13,7 @@ public class AddressBookApplication {
 
     ArrayList<PersonDetails> personInfo = new ArrayList<PersonDetails>();
 
-    public boolean createNewFile(String fileName) throws AddressBookException {
+    public boolean createNewFile(String fileName) {
         try {
             if (fileName.length()==0)
                 throw new AddressBookException("File Name Cannot be empty", AddressBookException.ExceptionType.ENTERED_EMPTY);
@@ -36,7 +36,7 @@ public class AddressBookApplication {
         return personInfo;
     }
 
-    public boolean deletePersonDetails(String fileName, String phoneNumber) throws AddressBookException {
+    public boolean deletePersonDetails(String fileName, String phoneNumber) {
         try {
             if (fileName.length()==0)
                 throw new AddressBookException("File Name Cannot be empty", AddressBookException.ExceptionType.ENTERED_EMPTY);

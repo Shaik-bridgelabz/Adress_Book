@@ -16,8 +16,8 @@ public class SortByField {
 
     public static Comparator getParameter(SortByField.Parameter parameter) {
 
-        Comparator<PersonDetails> firstNameComparator=Comparator.comparing(name->name.FirstName);
-        Comparator<PersonDetails> ZipComparator=Comparator.comparing(name->name.Zip);
+        Comparator<PersonDetails> firstNameComparator=Comparator.comparing(name->name.getFirstName());
+        Comparator<PersonDetails> ZipComparator=Comparator.comparing(name->name.getZip());
 
         sortParameterComparator.put(Parameter.FIRST_NAME,firstNameComparator);
         sortParameterComparator.put(Parameter.ZIP,ZipComparator);

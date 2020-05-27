@@ -2,97 +2,97 @@ package com.bridgelabz.addressbook;
 
 public class PersonDetails {
 
-    public String FirstName;
-    private String LastName;
-    private String Address;
-    private String City;
-    private String State;
-    public String Zip;
-    private String PhoneNumber ;
+    private String firstName;
+    private String lastName;
+    private String address;
+    private String city;
+    private String state;
+    private String zip;
+    private String phoneNumber;
 
     public PersonDetails(PersonDetails personDetails) {
-        this.FirstName=personDetails.FirstName;
-        this.Zip=personDetails.Zip;
+        this.firstName =personDetails.firstName;
+        this.zip =personDetails.zip;
     }
     public String getFirstName() {
-        return FirstName;
+        return this.firstName;
     }
 
     public String getLastName() {
-        return LastName;
+        return this.lastName;
     }
 
     public String getAddress() {
-        return Address;
+        return this.address;
     }
 
     public String getCity() {
-        return City;
+        return this.city;
     }
 
     public String getState() {
-        return State;
+        return this.state;
     }
 
     public String  getZip() {
-        return Zip;
+        return this.zip;
     }
 
     public String getPhoneNumber() {
-        return PhoneNumber;
+        return this.phoneNumber;
     }
 
     public void setFirstName(String firstName) {
-        FirstName = firstName;
+        this.firstName = firstName;
     }
 
     public void setLastName(String lastName) {
-        LastName = lastName;
+        this.lastName = lastName;
     }
 
     public void setAddress(String address) {
-        Address = address;
+        this.address = address;
     }
 
     public void setCity(String city) {
-        City = city;
+        this.city = city;
     }
 
     public void setState(String state) {
-        State = state;
+        this.state = state;
     }
 
     public void setZip(String zip) {
-        Zip = zip;
+        this.zip = zip;
     }
 
     public void setPhoneNumber(String phoneNumber) {
-        PhoneNumber = phoneNumber;
+        this.phoneNumber = phoneNumber;
     }
 
     public PersonDetails() {
     }
 
     public PersonDetails(String firstName, String lastName, String address, String city, String state, String zip, String phoneNumber) {
-        FirstName = firstName;
-        LastName = lastName;
-        Address = address;
-        City = city;
-        State = state;
-        Zip = zip;
-        PhoneNumber = phoneNumber;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.address = address;
+        this.city = city;
+        this.state = state;
+        this.zip = zip;
+        this.phoneNumber = phoneNumber;
     }
 
     @Override
     public String toString() {
         return "PersonDetails{" +
-                "FirstName='" + FirstName + '\'' +
-                ", LastName='" + LastName + '\'' +
-                ", Address='" + Address + '\'' +
-                ", City='" + City + '\'' +
-                ", State='" + State + '\'' +
-                ", Zip=" + Zip +
-                ", PhoneNumber=" + PhoneNumber +
+                "FirstName='" + firstName + '\'' +
+                ", LastName='" + lastName + '\'' +
+                ", Address='" + address + '\'' +
+                ", City='" + city + '\'' +
+                ", State='" + state + '\'' +
+                ", Zip=" + zip +
+                ", PhoneNumber=" + phoneNumber +
                 '}';
     }
 }

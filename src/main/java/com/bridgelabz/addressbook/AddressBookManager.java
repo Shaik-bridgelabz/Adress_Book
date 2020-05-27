@@ -15,7 +15,7 @@ public class AddressBookManager implements IAddressBook {
     AddressBookApplication addressBookApplication=new AddressBookApplication();
 
     @Override
-    public boolean createFile(String fileName) throws AddressBookException {
+    public boolean createFile(String fileName) {
        return addressBookApplication.createNewFile(fileName);
     }
 
@@ -25,7 +25,7 @@ public class AddressBookManager implements IAddressBook {
     }
 
     @Override
-    public boolean save(String fileName, ArrayList<PersonDetails> personDetails) throws AddressBookException {
+    public boolean save(String fileName, ArrayList<PersonDetails> personDetails) {
         try {
             if (fileName.length() == 0)
                 throw new AddressBookException("File Name Cannot be empty", AddressBookException.ExceptionType.ENTERED_EMPTY);
@@ -48,7 +48,7 @@ public class AddressBookManager implements IAddressBook {
     }
 
     @Override
-    public ArrayList<PersonDetails> readPersonInfo(String fileName) throws AddressBookException {
+    public ArrayList<PersonDetails> readPersonInfo(String fileName) {
         try {
         if (fileName.length()==0)
             throw new AddressBookException("File Name Cannot be empty", AddressBookException.ExceptionType.ENTERED_EMPTY);
@@ -71,12 +71,12 @@ public class AddressBookManager implements IAddressBook {
     }
 
     @Override
-    public boolean deletePersonDetails(String fileName, String phoneNumber) throws AddressBookException {
+    public boolean deletePersonDetails(String fileName, String phoneNumber) {
        return addressBookApplication.deletePersonDetails(fileName,phoneNumber);
     }
 
     @Override
-    public boolean editPersonDetails(String phoneNumber, String fileName, PersonDetails personDetails) throws AddressBookException {
+    public boolean editPersonDetails(String phoneNumber, String fileName, PersonDetails personDetails) {
         List<PersonDetails> personList = readPersonInfo(fileName);
         File file = new File("./src/main/java/com/bridgelabz/addressbook/json/" + fileName);
         try {
@@ -113,7 +113,7 @@ public class AddressBookManager implements IAddressBook {
     }
 
     @Override
-    public ArrayList getFieldWiseSortedData(SortByField.Parameter parameter,String fileName) throws AddressBookException {
+    public ArrayList getFieldWiseSortedData(SortByField.Parameter parameter,String fileName) {
         List<PersonDetails> personList = readPersonInfo(fileName);
         Comparator<PersonDetails> personDetailsComparator;
         if(personList ==null || personList.size()==0){
@@ -127,7 +127,7 @@ public class AddressBookManager implements IAddressBook {
     }
 
     @Override
-    public void printPersonDetails(String fileName) throws AddressBookException {
+    public void printPersonDetails(String fileName) {
         try {
             if (fileName.length()==0)
                 throw new AddressBookException("File Name Cannot be empty", AddressBookException.ExceptionType.ENTERED_EMPTY);
@@ -150,7 +150,7 @@ public class AddressBookManager implements IAddressBook {
     }
 
     @Override
-    public boolean saveAs(String fileName) throws AddressBookException {
+    public boolean saveAs(String fileName) {
         try {
             if (fileName.length() == 0)
                 throw new AddressBookException("File Name Cannot be empty", AddressBookException.ExceptionType.ENTERED_EMPTY);
