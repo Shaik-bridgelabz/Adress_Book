@@ -1,9 +1,8 @@
 package com.bridgelabz.addressbook;
 
 import java.util.ArrayList;
-import java.util.List;
 
-public interface AddressBook {
+public interface IAddressBook {
 
     public boolean createFile(String fileName) throws AddressBookException;
 
@@ -21,5 +20,5 @@ public interface AddressBook {
 
     public void printPersonDetails(String fileName) throws AddressBookException;
 
-    public boolean saveAs(String fileName, ArrayList<PersonDetails> personDetails) throws AddressBookException;
+    public boolean saveAs(String fileName) throws AddressBookException;
 }

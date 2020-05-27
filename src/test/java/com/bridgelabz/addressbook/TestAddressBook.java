@@ -90,7 +90,7 @@ public class TestAddressBook {
     public void givenFileName_whenDeletedPersonDetails_shouldDeletePersonandReturnTrue() {
         try {
         AddressBookManager addressBookManager = new AddressBookManager();
-            Assert.assertEquals(true,addressBookManager.deletePersonDetails("MyAddress.json","Salman"));
+            Assert.assertEquals(true,addressBookManager.deletePersonDetails("MyAddress.json","8800223344"));
         } catch (AddressBookException e) {
             e.printStackTrace();
         }
@@ -165,8 +165,7 @@ public class TestAddressBook {
     public void givenNewFileName_whenSavedAs_shouldSavePersonDetails() {
         try {
             AddressBookManager addressBookManager=new AddressBookManager();
-            ArrayList<PersonDetails> personDetails = addressBookManager.readPersonInfo("MyAddress.json");
-            Assert.assertEquals(true,addressBookManager.saveAs("NewAddressBook.json",personDetails));
+            Assert.assertEquals(true,addressBookManager.saveAs("ShaikAddressBook.txt"));
         } catch (AddressBookException e) {
             e.printStackTrace();
         }

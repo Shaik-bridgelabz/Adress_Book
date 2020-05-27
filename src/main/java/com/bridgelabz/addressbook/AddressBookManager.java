@@ -9,33 +9,19 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class AddressBookManager implements AddressBook  {
+public class AddressBookManager implements IAddressBook {
 
     ArrayList<PersonDetails> personInfo = new ArrayList<PersonDetails>();
+    AddressBookApplication addressBookApplication=new AddressBookApplication();
 
     @Override
     public boolean createFile(String fileName) throws AddressBookException {
-        try {
-        if (fileName.length()==0)
-            throw new AddressBookException("File Name Cannot be empty", AddressBookException.ExceptionType.ENTERED_EMPTY);
-        File files = new File("./src/main/java/com/bridgelabz/addressbook/json/" + fileName);
-        boolean isFileExist = files.exists();
-        if (isFileExist) {
-            return false;
-        }
-            files.createNewFile();
-        return true;
-        } catch (IOException e) {
-            throw new AddressBookException("Cannot Create File in path", AddressBookException.ExceptionType.CANNOT_CREATE_FILE);
-        } catch (NullPointerException e) {
-            throw new AddressBookException("File Name Cannot be Null", AddressBookException.ExceptionType.ENTERED_NULL);
-        }
+       return addressBookApplication.createNewFile(fileName);
     }
 
     @Override
     public ArrayList<PersonDetails> addPersonDetails(PersonDetails personDetails) {
-       personInfo.add(personDetails);
-       return personInfo;
+       return addressBookApplication.addPersonDetails(personDetails);
     }
 
     @Override
@@ -85,31 +71,8 @@ public class AddressBookManager implements AddressBook  {
     }
 
     @Override
-    public boolean deletePersonDetails(String fileName, String firstName) throws AddressBookException {
-        try {
-            if (fileName.length()==0)
-                throw new AddressBookException("File Name Cannot be empty", AddressBookException.ExceptionType.ENTERED_EMPTY);
-            File file = new File("./src/main/java/com/bridgelabz/addressbook/json/" + fileName);
-            List<PersonDetails> personDetailsList = readPersonInfo(fileName);
-            for (PersonDetails personDetails1: personDetailsList) {
-                if (personDetails1.getFirstName().equals(firstName)) {
-                    personDetailsList.remove(personDetails1);
-                    Gson gson = new Gson();
-                    String json = gson.toJson(personDetailsList);
-                    FileWriter writer = new FileWriter(file);
-                    writer.write(json);
-                    writer.close();
-                    return true;
-                }
-            }
-            return false;
-        } catch (NullPointerException e) {
-            throw new AddressBookException("File Name Cannot be Null", AddressBookException.ExceptionType.ENTERED_NULL);
-        } catch (FileNotFoundException e) {
-            throw new AddressBookException("No Such File Found in Path", AddressBookException.ExceptionType.NO_FILE_FOUND);
-        } catch (IOException e) {
-            throw new AddressBookException("File I/O Error", AddressBookException.ExceptionType.NO_FILE_FOUND);
-        }
+    public boolean deletePersonDetails(String fileName, String phoneNumber) throws AddressBookException {
+       return addressBookApplication.deletePersonDetails(fileName,phoneNumber);
     }
 
     @Override
@@ -146,9 +109,7 @@ public class AddressBookManager implements AddressBook  {
     }
 
     public boolean checksize(List<PersonDetails> list) {
-        if(list.size()!=0)
-            return true;
-        return false;
+        return addressBookApplication.checksize(list);
     }
 
     @Override
@@ -189,7 +150,7 @@ public class AddressBookManager implements AddressBook  {
     }
 
     @Override
-    public boolean saveAs(String fileName, ArrayList<PersonDetails> personDetails) throws AddressBookException {
+    public boolean saveAs(String fileName) throws AddressBookException {
         try {
             if (fileName.length() == 0)
                 throw new AddressBookException("File Name Cannot be empty", AddressBookException.ExceptionType.ENTERED_EMPTY);
@@ -199,11 +160,9 @@ public class AddressBookManager implements AddressBook  {
                 return false;
             }
             this.createFile(fileName);
-            Gson gson = new Gson();
-            String json = gson.toJson(personDetails);
-            FileWriter writer = null;
-            writer = new FileWriter("./src/main/java/com/bridgelabz/addressbook/json/" + fileName);
-            writer.write(json);
+            ArrayList<PersonDetails> personDetails = this.readPersonInfo("MyAddress.json");
+            FileWriter writer = new FileWriter("./src/main/java/com/bridgelabz/addressbook/json/" + fileName);
+            writer.write(String.valueOf(personDetails));
             writer.close();
             return true;
         } catch (IOException e) {
