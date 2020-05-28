@@ -2,7 +2,7 @@ package com.bridgelabz.addressbook;
 
 import java.util.ArrayList;
 
-public interface IAddressBook {
+public interface IAddressBookManager {
 
     public boolean createFile(String fileName);
 
@@ -10,7 +10,7 @@ public interface IAddressBook {
 
     public boolean save(String fileName, ArrayList<PersonDetails> personDetails) ;
 
-    public ArrayList<PersonDetails> readPersonInfo(String fileName);
+    public ArrayList<PersonDetails> readPersonDetails(String fileName);
 
     public boolean deletePersonDetails(String fileName, String firstName);
 

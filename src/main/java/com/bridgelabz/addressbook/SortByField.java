@@ -14,14 +14,13 @@ public class SortByField {
 
     SortByField(){}
 
-    public static Comparator getParameter(SortByField.Parameter parameter) {
+    private static final Comparator<PersonDetails> firstNameComparator=Comparator.comparing(name->name.getFirstName());
+    private static final Comparator<PersonDetails> ZipComparator=Comparator.comparing(name->name.getZip());
 
-        Comparator<PersonDetails> firstNameComparator=Comparator.comparing(name->name.getFirstName());
-        Comparator<PersonDetails> ZipComparator=Comparator.comparing(name->name.getZip());
+    public static Comparator getParameter(SortByField.Parameter parameter) {
 
         sortParameterComparator.put(Parameter.FIRST_NAME,firstNameComparator);
         sortParameterComparator.put(Parameter.ZIP,ZipComparator);
-
 
         Comparator<PersonDetails> comparator=sortParameterComparator.get(parameter);
         return comparator;

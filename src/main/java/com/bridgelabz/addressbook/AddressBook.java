@@ -9,9 +9,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AddressBookApplication {
+public class AddressBook {
 
-    ArrayList<PersonDetails> personInfo = new ArrayList<PersonDetails>();
+    ArrayList<PersonDetails> personDetailsList = new ArrayList<PersonDetails>();
 
     public boolean createNewFile(String fileName) {
         try {
@@ -32,8 +32,8 @@ public class AddressBookApplication {
     }
 
     public ArrayList<PersonDetails> addPersonDetails(PersonDetails personDetails) {
-        personInfo.add(personDetails);
-        return personInfo;
+        personDetailsList.add(personDetails);
+        return personDetailsList;
     }
 
     public boolean deletePersonDetails(String fileName, String phoneNumber) {
@@ -41,7 +41,7 @@ public class AddressBookApplication {
             if (fileName.length()==0)
                 throw new AddressBookException("File Name Cannot be empty", AddressBookException.ExceptionType.ENTERED_EMPTY);
             File file = new File("./src/main/java/com/bridgelabz/addressbook/json/" + fileName);
-            List<PersonDetails> personDetailsList = new AddressBookManager().readPersonInfo(fileName);
+            List<PersonDetails> personDetailsList = new AddressBookManager().readPersonDetails(fileName);
             for (PersonDetails personDetails1: personDetailsList) {
                 if (personDetails1.getPhoneNumber().equals(phoneNumber)) {
                     personDetailsList.remove(personDetails1);

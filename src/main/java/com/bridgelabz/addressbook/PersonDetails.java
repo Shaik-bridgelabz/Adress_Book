@@ -10,10 +10,6 @@ public class PersonDetails {
     private String zip;
     private String phoneNumber;
 
-    public PersonDetails(PersonDetails personDetails) {
-        this.firstName =personDetails.firstName;
-        this.zip =personDetails.zip;
-    }
     public String getFirstName() {
         return this.firstName;
     }

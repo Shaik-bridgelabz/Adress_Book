@@ -9,19 +9,18 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class AddressBookManager implements IAddressBook {
+public class AddressBookManager extends AddressBook implements IAddressBookManager {
 
-    ArrayList<PersonDetails> personInfo = new ArrayList<PersonDetails>();
-    AddressBookApplication addressBookApplication=new AddressBookApplication();
+    AddressBook addressBook =new AddressBook();
 
     @Override
     public boolean createFile(String fileName) {
-       return addressBookApplication.createNewFile(fileName);
+       return addressBook.createNewFile(fileName);
     }
 
     @Override
     public ArrayList<PersonDetails> addPersonDetails(PersonDetails personDetails) {
-       return addressBookApplication.addPersonDetails(personDetails);
+        return addressBook.addPersonDetails(personDetails);
     }
 
     @Override
@@ -48,36 +47,34 @@ public class AddressBookManager implements IAddressBook {
     }
 
     @Override
-    public ArrayList<PersonDetails> readPersonInfo(String fileName) {
+    public ArrayList<PersonDetails> readPersonDetails(String fileName) {
         try {
         if (fileName.length()==0)
             throw new AddressBookException("File Name Cannot be empty", AddressBookException.ExceptionType.ENTERED_EMPTY);
         File file = new File("./src/main/java/com/bridgelabz/addressbook/json/" + fileName);
         if (file.exists()) {
             Gson gson = new Gson();
-            BufferedReader br = null;
-            br = new BufferedReader(new FileReader(file));
+            BufferedReader br = new BufferedReader(new FileReader(file));
             PersonDetails[] personDetails = gson.fromJson(br, PersonDetails[].class);
             for (int i = 0; i < personDetails.length; i++) {
-                personInfo.add(personDetails[i]);
+                personDetailsList.add(personDetails[i]);
             }
+            return personDetailsList;
         }
-            return personInfo;
-        } catch (NullPointerException e) {
-            throw new AddressBookException("File Name Cannot be Null", AddressBookException.ExceptionType.ENTERED_NULL);
-        } catch (FileNotFoundException e) {
             throw new AddressBookException("No Such File Found in Path", AddressBookException.ExceptionType.NO_FILE_FOUND);
+        } catch (NullPointerException | FileNotFoundException e) {
+            throw new AddressBookException("File Name Cannot be Null", AddressBookException.ExceptionType.ENTERED_NULL);
         }
     }
 
     @Override
     public boolean deletePersonDetails(String fileName, String phoneNumber) {
-       return addressBookApplication.deletePersonDetails(fileName,phoneNumber);
+       return addressBook.deletePersonDetails(fileName,phoneNumber);
     }
 
     @Override
     public boolean editPersonDetails(String phoneNumber, String fileName, PersonDetails personDetails) {
-        List<PersonDetails> personList = readPersonInfo(fileName);
+        List<PersonDetails> personList = readPersonDetails(fileName);
         File file = new File("./src/main/java/com/bridgelabz/addressbook/json/" + fileName);
         try {
                 for (PersonDetails person : personList) {
@@ -109,18 +106,18 @@ public class AddressBookManager implements IAddressBook {
     }
 
     public boolean checksize(List<PersonDetails> list) {
-        return addressBookApplication.checksize(list);
+        return addressBook.checksize(list);
     }
 
     @Override
     public ArrayList getFieldWiseSortedData(SortByField.Parameter parameter,String fileName) {
-        List<PersonDetails> personList = readPersonInfo(fileName);
+        List<PersonDetails> personList = readPersonDetails(fileName);
         Comparator<PersonDetails> personDetailsComparator;
         if(personList ==null || personList.size()==0){
             throw new AddressBookException("No Data Found",AddressBookException.ExceptionType.NO_FILE_FOUND);
         }
         personDetailsComparator = SortByField.getParameter(parameter);
-        ArrayList sortedData= personList.stream().
+        ArrayList sortedData= personDetailsList.stream().
                 sorted(personDetailsComparator).collect(Collectors.toCollection(ArrayList::new));
         this.save(fileName,sortedData);
         return sortedData;
@@ -139,7 +136,7 @@ public class AddressBookManager implements IAddressBook {
                 PersonDetails[] personDetails = gson.fromJson(br, PersonDetails[].class);
                 System.out.println(Arrays.toString(personDetails));
                 for (int i = 0; i < personDetails.length; i++) {
-                    personInfo.add(personDetails[i]);
+                    personDetailsList.add(personDetails[i]);
                 }
             }
         } catch (NullPointerException e) {
@@ -160,7 +157,7 @@ public class AddressBookManager implements IAddressBook {
                 return false;
             }
             this.createFile(fileName);
-            ArrayList<PersonDetails> personDetails = this.readPersonInfo("MyAddress.json");
+            ArrayList<PersonDetails> personDetails = this.readPersonDetails("MyAddressBook.json");
             FileWriter writer = new FileWriter("./src/main/java/com/bridgelabz/addressbook/json/" + fileName);
             writer.write(String.valueOf(personDetails));
             writer.close();
