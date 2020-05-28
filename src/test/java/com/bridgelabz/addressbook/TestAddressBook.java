@@ -170,4 +170,15 @@ public class TestAddressBook {
             e.printStackTrace();
         }
     }
+
+    @Test
+    public void givenNewFileName_whenSavedAsCSVFile_shouldSavePersonDetailsinCSVFile() {
+        try {
+            AddressBookManager addressBookManager=new AddressBookManager();
+            boolean result=addressBookManager.saveAsCSVFile("ShaikAddressBook.csv");
+            Assert.assertEquals(true,result);
+        } catch (AddressBookException e) {
+            e.printStackTrace();
+        }
+    }
 }

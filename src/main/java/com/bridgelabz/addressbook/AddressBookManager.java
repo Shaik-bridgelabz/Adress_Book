@@ -168,4 +168,46 @@ public class AddressBookManager extends AddressBook implements IAddressBookManag
             throw new AddressBookException("File Name Cannot be Null", AddressBookException.ExceptionType.ENTERED_NULL);
         }
     }
+
+    public boolean saveAsCSVFile(String fileName) {
+        try {
+            if (fileName.length() == 0)
+                throw new AddressBookException("File Name Cannot be empty", AddressBookException.ExceptionType.ENTERED_EMPTY);
+            File file = new File("./src/main/java/com/bridgelabz/addressbook/json/" + fileName);
+            if (file.exists()) {
+                System.out.println("Please give other file Name");
+                return false;
+            }
+            this.createFile(fileName);
+            List<PersonDetails> personDetails = this.readPersonDetails("MyAddressBook.json");
+            String FILE_HEADER="firstName,lastName,address,city,state,zip,phoneNumber";
+            FileWriter writer=new FileWriter("./src/main/java/com/bridgelabz/addressbook/json/" + fileName);
+            writer.append(FILE_HEADER.toString());
+            writer.append("\n");
+            for (PersonDetails person : personDetails) {
+                writer.append(String.valueOf(person.getFirstName()));
+                writer.append(",");
+                writer.append(String.valueOf(person.getLastName()));
+                writer.append(",");
+                writer.append(String.valueOf(person.getAddress()));
+                writer.append(",");
+                writer.append(String.valueOf(person.getCity()));
+                writer.append(",");
+                writer.append(String.valueOf(person.getState()));
+                writer.append(",");
+                writer.append(String.valueOf(person.getZip()));
+                writer.append(",");
+                writer.append(String.valueOf(person.getPhoneNumber()));
+                writer.append(",");
+                writer.append("\n");
+            }
+            writer.flush();
+            writer.close();
+            return true;
+        } catch (IOException e) {
+            throw new AddressBookException("Cannot Save in the File", AddressBookException.ExceptionType.NO_FILE_FOUND);
+        } catch (NullPointerException e) {
+            throw new AddressBookException("File Name Cannot be Null", AddressBookException.ExceptionType.ENTERED_NULL);
+        }
+    }
 }

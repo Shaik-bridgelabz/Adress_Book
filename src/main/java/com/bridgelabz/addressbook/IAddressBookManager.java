@@ -21,4 +21,5 @@ public interface IAddressBookManager {
     public void printPersonDetails(String fileName);
 
     public boolean saveAs(String fileName);
+
 }
