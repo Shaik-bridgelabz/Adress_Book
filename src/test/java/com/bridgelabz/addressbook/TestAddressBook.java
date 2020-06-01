@@ -9,7 +9,7 @@ public class TestAddressBook {
     @Test
     public void givenFileNametoCreate_whenNotExist_shouldCreateFileandReturnTrue() {
         try {
-            String fileName="MyNewAddressBook";
+            String fileName="MyNewAddressBook.json";
             boolean createFile=addressBook.createNewFile(fileName);
             Assert.assertEquals(true,createFile);
         } catch (AddressBookException e) {

@@ -1,20 +1,39 @@
 package com.bridgelabz.addressbook;
 
 import org.junit.Assert;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.MockitoJUnit;
+import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.junit.MockitoRule;
+
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.mockito.Mockito.when;
+
+@RunWith(MockitoJUnitRunner.class)
 public class TestAddressBookManager {
 
-    AddressBookManager addressBookManager=new AddressBookManager();
+    @Rule
+    public MockitoRule rule = MockitoJUnit.rule();
+
+    @Mock
+    public AddressBook addressBook;
+
+    @InjectMocks
+    public AddressBookManager addressBookManager;
+
 
     @Test
     public void givenFileNametoCreate_whenNotExist_shouldCreateFileandReturnTrue() {
         try {
-            String fileName="MyNewAddressBook";
-            boolean createFile=addressBookManager.createFile(fileName);
-            Assert.assertEquals(true,createFile);
+            String fileName="MyNewAddressBook2.json";
+            when(addressBook.createNewFile(fileName)).thenReturn(true);
+            Assert.assertEquals(true,addressBookManager.createFile(fileName));
         } catch (AddressBookException e) {
             e.printStackTrace();
         }
@@ -23,7 +42,9 @@ public class TestAddressBookManager {
     @Test
     public void givenFileNametoCreate_whenExists_shouldNotCreateFileandReturnFalse() {
         try {
-            Assert.assertEquals(false, addressBookManager.createFile("MyAddressBook.json"));
+            String fileName="MyNewAddressBook2.json";
+            when(addressBook.createNewFile(fileName)).thenReturn(false);
+            Assert.assertEquals(false,addressBookManager.createFile(fileName));
         } catch (AddressBookException e) {
             e.printStackTrace();
         }
@@ -31,9 +52,11 @@ public class TestAddressBookManager {
 
     @Test
     public void givenFile_whenAddPersonDetails_shouldReturnPersonDetails() {
-        AddressBookManager addressBookManager = new AddressBookManager();
         PersonDetails personDetails=new PersonDetails("Shaik", "Mohammed", "VijayNagar", "Bangalore", "Karnataka", "124536", "8660424568");
-        Assert.assertEquals("8660424568", addressBookManager.addPersonDetails(personDetails).iterator().next().getPhoneNumber());
+        ArrayList<PersonDetails> personList=new ArrayList<>();
+        personList.add(personDetails);
+        when(addressBook.addPersonDetails(personDetails)).thenReturn(personList);
+        Assert.assertEquals(1, addressBookManager.addPersonDetails(personDetails).size());
     }
 
     @Test
@@ -91,8 +114,28 @@ public class TestAddressBookManager {
     @Test
     public void givenFileName_whenDeletedPersonDetails_shouldDeletePersonandReturnTrue() {
         try {
-        AddressBookManager addressBookManager = new AddressBookManager();
-            Assert.assertEquals(true,addressBookManager.deletePersonDetails("MyAddressBook.json","8800223344"));
+            PersonDetails personDetails1=new PersonDetails("Shaik", "Mohammed", "VijayNagar", "Bangalore", "Karnataka", "124536", "8660424568");
+            PersonDetails personDetails2 = new PersonDetails("Sharukh", "Khan", "Mumbai", "Mumbai", "Maharashtra", "124536", "8660424568");
+            ArrayList<PersonDetails> personList=new ArrayList<>();
+            personList.add(personDetails1);
+            personList.add(personDetails2);
+            when(addressBook.deletePersonDetails("MyAddressBook.json","8660424568")).thenReturn(true);
+            Assert.assertEquals(true,addressBookManager.deletePersonDetails("MyAddressBook.json","8660424568"));
+        } catch (AddressBookException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    public void givenFileName_whenDeletedNonExistingPersonDetails_shouldReturnFalse() {
+        try {
+            PersonDetails personDetails1=new PersonDetails("Shaik", "Mohammed", "VijayNagar", "Bangalore", "Karnataka", "124536", "8660424568");
+            PersonDetails personDetails2 = new PersonDetails("Sharukh", "Khan", "Mumbai", "Mumbai", "Maharashtra", "124536", "8660424568");
+            ArrayList<PersonDetails> personList=new ArrayList<>();
+            personList.add(personDetails1);
+            personList.add(personDetails2);
+            when(addressBook.deletePersonDetails("MyAddressBook.json","8112345682")).thenReturn(false);
+            Assert.assertEquals(false,addressBookManager.deletePersonDetails("MyAddressBook.json","8112345682"));
         } catch (AddressBookException e) {
             e.printStackTrace();
         }
