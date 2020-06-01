@@ -11,7 +11,11 @@ import java.util.stream.Collectors;
 
 public class AddressBookManager extends AddressBook implements IAddressBookManager {
 
-    AddressBook addressBook =new AddressBook();
+    public AddressBook addressBook;
+
+    public AddressBookManager() {
+        this.addressBook=new AddressBook();
+    }
 
     @Override
     public boolean createFile(String fileName) {
